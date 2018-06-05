@@ -2,7 +2,7 @@ class ClassicSearchAlgorithm(object):
     def __init__(self, problem):
         self.problem = problem
 
-    def GraphDFS(self, startState):
+    def graph_depth_first_search(self, startState):
         visited_nodes = []
         nodes_to_expand = [startState]
 
@@ -11,6 +11,7 @@ class ClassicSearchAlgorithm(object):
 
         while nodes_to_expand:
             state_to_check = nodes_to_expand.pop()
+            print(state_to_check)
             number_of_expanded_nodes = number_of_expanded_nodes + 1
             if self.problem.isGoalTest(state_to_check):
                 print("Algorithm: Graph DFS")
@@ -25,7 +26,7 @@ class ClassicSearchAlgorithm(object):
                     number_of_visited_nodes = number_of_visited_nodes + 1
                     nodes_to_expand.append(state)
 
-    def GraphBFS(self, start_state):
+    def graph_breadth_first_search(self, start_state):
         visited_nodes = []
         nodes_to_expand = [start_state]
 
@@ -48,9 +49,10 @@ class ClassicSearchAlgorithm(object):
                     number_of_visited_nodes = number_of_visited_nodes + 1
                     nodes_to_expand.append(state)
 
-    # def UCS(self, start_node):
+    # def graph_uniform_cost_search(self, start_node):
 
-    def bidirectional(self, start_state, goal_state):
+
+    def graph_bidirectional_search(self, start_state, goal_state):
         visited_nodes = []
         nodes_to_expand_from_start = [start_state]
         nodes_to_expand_from_goal = [goal_state]
