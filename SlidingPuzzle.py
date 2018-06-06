@@ -11,18 +11,18 @@ class Problem():
         #     [0, 6, 8]
         # ]
 
-        return [
-            [1, 2, 0],
-            [3, 4, 5],
-            [6, 7, 8]
-        ]
+        return (
+            (1, 2, 0),
+            (3, 4, 5),
+            (6, 7, 8)
+        )
 
     def goal(self):
-        return [
-            [0, 1, 2],
-            [3, 4, 5],
-            [6, 7, 8]
-        ]
+        return (
+            (0, 1, 2),
+            (3, 4, 5),
+            (6, 7, 8)
+        )
 
     def isGoalTest(self, state):
         return state == self.goal()
@@ -50,13 +50,13 @@ class Problem():
         zero_row = -1
         zero_col = -1
         states = []
-        result_actions = []
         for row in state:
             for col in row:
                 if col == 0:
                     zero_row = state.index(row)
                     zero_col = row.index(col)
         for action in actions:
+            state = list(list(item) for item in state)
             temp_state = deepcopy(state)
             if 'U' in action:
                 temp_state[zero_row][zero_col], temp_state[zero_row - 1][zero_col] = state[zero_row - 1][zero_col], \
@@ -70,6 +70,7 @@ class Problem():
             if 'R' in action:
                 temp_state[zero_row][zero_col], temp_state[zero_row][zero_col + 1] = state[zero_row][zero_col + 1], \
                                                                                      state[zero_row][zero_col]
+            temp_state = tuple(tuple(item) for item in temp_state)
             states.append(temp_state)
         return states
 
@@ -118,9 +119,9 @@ class Problem():
 p = Problem()
 csa = ClassicSearchAlgorithm(p)
 bcsa = BeyondClassicSearchAlgorithm(p)
-path = csa.graph_depth_first_search(p.initialState())
+# csa.graph_depth_first_search(p.initialState())
+csa.tree_depth_first_search(p.initialState())
 # csa.graph_breadth_first_search(p.initialState())
 # csa.graph_bidirectional_search(p.initialState(), p.goal())
 # csa.graph_uniform_cost_search(p.initialState())
 # bcsa.a_star(p.initialState())
-p.print_path(path)

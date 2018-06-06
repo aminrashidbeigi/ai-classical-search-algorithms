@@ -1,8 +1,9 @@
 from SearchAlgorithms.ClassicSearchAlgorithms import *
+from SearchAlgorithms.BeyondClassicSearchAlgorithm import *
 from copy import deepcopy
 
-class Problem():
 
+class Problem():
     n = 5
     m = 5
     size = [n, m]
@@ -78,9 +79,30 @@ class Problem():
     def step_cost(self, current_state, next_state):
         return 1
 
+    def heuristic(self, state):
+        return list(state)[0] + list(state)[1] - 2
+
+    def print_path(self, path):
+        # TODO: this function has bug in some algorithms
+        def find_direction(current_state, next_state):
+            if current_state[0] == next_state[0] and current_state[1] > next_state[1]:
+                print('L', end=" ")
+            elif current_state[0] == next_state[0] and current_state[1] < next_state[1]:
+                print('R', end=" ")
+            elif current_state[0] > next_state[0] and current_state[1] == next_state[1]:
+                print('U', end=" ")
+            elif current_state[0] < next_state[0] and current_state[1] == next_state[1]:
+                print('D', end=" ")
+
+        print("Path:", end=" ")
+        for current_state, next_state in zip(path, path[1:]):
+            find_direction(current_state, next_state)
+
 
 p = Problem()
 csa = ClassicSearchAlgorithm(p)
+bcsa = BeyondClassicSearchAlgorithm(p)
 # csa.graph_depth_first_search(p.initialState())
 # csa.graph_uniform_cost_search(p.initialState())
 # csa.graph_bidirectional_search(p.initialState(), p.goal())
+# bcsa.a_star(p.initialState())
