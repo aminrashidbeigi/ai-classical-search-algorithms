@@ -80,21 +80,22 @@ class ClassicSearchAlgorithm(object):
             path_from_goal.append(current_state_from_goal)
             if current_state_from_goal == current_state_from_start:
                 print("Algorithm: Graph bidirectional")
+                print("Last state from start: " + str(current_state_from_start))
+                print("Last state from goal: " + str(current_state_from_goal))
                 print("Memory: " + str(self.memory))
-                for p1 in path_from_start:
-                    path.append(p1)
-                for p2 in reversed(path_from_goal):
-                    path.append(p2)
-                return path
+                self.print_path(current_state_from_start)
+                self.print_path(reversed(current_state_from_goal))
             visited_nodes.append(current_state_from_goal)
             visited_nodes.append(current_state_from_start)
             states_from_start = self.problem.results(self.problem.actions(current_state_from_start), current_state_from_start)
             states_from_goal = self.problem.results(self.problem.actions(current_state_from_goal), current_state_from_goal)
             for state_from_start in states_from_start:
                 nodes_to_expand_from_start.append(state_from_start)
+                self.parent[state_from_start] = current_state_from_start
                 self.memory = self.memory + 1
             for state_from_goal in states_from_goal:
                 nodes_to_expand_from_goal.append(state_from_goal)
+                self.parent[state_from_goal] = current_state_from_goal
                 self.memory = self.memory + 1
 
     def graph_uniform_cost_search(self, start_state):
