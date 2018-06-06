@@ -1,3 +1,6 @@
+import sys
+
+
 class ClassicSearchAlgorithm(object):
     def __init__(self, problem):
         self.problem = problem
@@ -49,9 +52,6 @@ class ClassicSearchAlgorithm(object):
                     number_of_visited_nodes = number_of_visited_nodes + 1
                     nodes_to_expand.append(state)
 
-    # def graph_uniform_cost_search(self, start_node):
-
-
     def graph_bidirectional_search(self, start_state, goal_state):
         visited_nodes = []
         nodes_to_expand_from_start = [start_state]
@@ -73,3 +73,32 @@ class ClassicSearchAlgorithm(object):
             for state_from_goal in states_from_goal:
                 nodes_to_expand_from_goal.append(state_from_goal)
 
+    def graph_uniform_cost_search(self, start_state):
+        def find_node_with_minimum_cost_to_expand(nodes):
+            min_cost = sys.maxsize
+            min_node = ()
+            for node in nodes:
+                if min_cost > node[1]:
+                    min_cost = node[1]
+                    min_node = node
+            return min_node
+
+        path_cost = 0
+        visited_nodes = []
+        nodes_to_expand = [(start_state, path_cost)]
+
+        while nodes_to_expand:
+            state_to_check = find_node_with_minimum_cost_to_expand(nodes_to_expand)
+            # print(state_to_check)
+            nodes_to_expand.pop(nodes_to_expand.index(state_to_check))
+            path_cost = state_to_check[1]
+            if self.problem.isGoalTest(state_to_check[0]):
+                print("Algorithm: Graph Uniform Cost Search")
+                print("Cost: " + str(path_cost))
+                return state_to_check[0]
+            visited_nodes.append(state_to_check[0])
+            states = self.problem.results(self.problem.actions(state_to_check[0]), state_to_check[0])
+            # print(states)
+            for state in states:
+                if state not in visited_nodes:
+                    nodes_to_expand.append((state, path_cost + self.problem.step_cost(state_to_check[0], state)))
