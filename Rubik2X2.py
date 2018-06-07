@@ -58,7 +58,7 @@ class Problem():
 
     def results_actions(self, state):
         states = []
-        state = state[0]
+        state = state
         actions = self.actions(state)
         for action in actions:
             state = list(state)
@@ -96,7 +96,10 @@ class Problem():
     def print_path(self, path):
         print('Path:', end=' ')
         for current_state, next_state in zip(path, path[1:]):
-            states = self.results_actions(current_state)
+            if current_state[1] == 0:
+                states = self.results_actions(current_state[0])
+            else:
+                states = self.results_actions(current_state)
             for state in states:
                 if state[0] == list(next_state):
                     print(state[1])
@@ -105,6 +108,7 @@ class Problem():
 p = Problem()
 csa = ClassicSearchAlgorithm(p)
 bcsa = BeyondClassicSearchAlgorithm(p)
-path = csa.graph_breadth_first_search(p.initialState())
-# path = csa.graph_depth_limited_search(p.initialState(), 14)
-# path = csa.graph_iterative_deepening_search(p.initialState(), 0)
+
+# csa.graph_breadth_first_search(p.initialState())
+# csa.graph_depth_limited_search(p.initialState(), 14)
+# csa.graph_iterative_deepening_search(p.initialState(), 0)

@@ -12,9 +12,9 @@ class Problem():
         # ]
 
         return (
-            (1, 2, 0),
-            (3, 4, 5),
-            (6, 7, 8)
+            (3, 1, 2),
+            (6, 4, 5),
+            (0, 7, 8)
         )
 
     def goal(self):
@@ -115,12 +115,13 @@ class Problem():
         print("Path:", end=" ")
         for current_state, next_state in zip(path, path[1:]):
             find_direction(current_state, next_state)
+        print()
 
 p = Problem()
 csa = ClassicSearchAlgorithm(p)
 bcsa = BeyondClassicSearchAlgorithm(p)
+
 # csa.graph_depth_first_search(p.initialState())
-# csa.graph_breadth_first_search(p.initialState())
 # csa.graph_bidirectional_search(p.initialState(), p.goal())
 # csa.graph_uniform_cost_search(p.initialState())
-# bcsa.a_star(p.initialState())
+# bcsa.graph_a_star(p.initialState())

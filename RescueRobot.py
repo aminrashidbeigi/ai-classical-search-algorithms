@@ -83,7 +83,6 @@ class Problem():
         return list(state)[0] + list(state)[1] - 2
 
     def print_path(self, path):
-        # TODO: this function has bug in some algorithms
         def find_direction(current_state, next_state):
             if current_state[0] == next_state[0] and current_state[1] > next_state[1]:
                 print('L', end=" ")
@@ -102,7 +101,9 @@ class Problem():
 p = Problem()
 csa = ClassicSearchAlgorithm(p)
 bcsa = BeyondClassicSearchAlgorithm(p)
+
 # csa.graph_depth_first_search(p.initialState())
-# csa.graph_uniform_cost_search(p.initialState())
+# csa.graph_breadth_first_search(p.initialState())
 # csa.graph_bidirectional_search(p.initialState(), p.goal())
-# bcsa.a_star(p.initialState())
+# csa.graph_uniform_cost_search(p.initialState())
+# bcsa.graph_a_star(p.initialState())
